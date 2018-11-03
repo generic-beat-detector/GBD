@@ -36,8 +36,11 @@ may execute on a remote host which need not be a GNU/Linux system. This is discu
 
 With realtime beat detection, as an audio stream is routed through the GBD framework, the 
 GBD music DSP analysis library delivers beat counts to Linux POSIX SHM. 
-The IoT maker can then use this information to synchronize the control of light bulbs/leds, or even an emulation such as in this [*Youtube video*](https://youtu.be/1wmrO51TZqA), to the beats of the music.
+The IoT maker can then use this information to synchronize the control of light bulbs/leds to the 
+music's beats. Check this OpenGL LED emulation on [*Youtube*](https://youtu.be/1wmrO51TZqA). This beat
+detection mode is referred to as *GBD Standard*.
 
+__NEWS:__ A new beat detection mode, [*GBD Drift*](https://www.youtube.com/watch?v=_Gsr5TF1x7E), is scheduled for inclusion  in the next release (around late Nov 2018).
 
 Bear in mind that while GBD's realtime beat detection is sturdy, it still requires some "compliance" on the part of the user
 if it is to function in the most generic manner possible, i.e. across the variety of music genres. For the best results, the quality of the music should be that of professional studio CD recordings: preferably WAV uncompressed PCM or, at least, an encoding by an industry-standard audio format converter. For example, pirated `.mp3` downloads from the Internet (i.e. poorly encoded or transcoded formats) or amateur recordings are likely to result in disappointment. These issues are discussed more fully
