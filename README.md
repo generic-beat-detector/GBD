@@ -11,7 +11,7 @@ audio signal routing between hosts.
 <img src="https://github.com/generic-beat-detector/GBD/blob/master/docs/img/gbd-iot-framework.jpg" alt="GBD IoT Framework" width="760" height="250"/>
 </p>
 
-This GBD release (v0.20) offers low-latency and realtime beat detection for
+This GBD release (v0.21) offers low-latency and realtime beat detection for
 live/playing music streams:
 
 * Bass beat (e.g. kick drum) detection (below 200Hz)
