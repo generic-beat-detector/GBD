@@ -29,7 +29,7 @@ for example, the Philips Hue Disco framework.
 ## Operation
 
 The Raspberry Pi computer is used as the platform of choice for the GBD core given the board's popularity with the IoT maker community. The *GBD core* (PCM routing server and DSP library) is GNU/Linux based. The GBD client and/or audio applications
-may execute on a remote host which need not be a GNU/Linux system. This is discussed at greater depth in [*GBD Architecture*](https://github.com/generic-beat-detector/GBD/wiki/The-GBD-IoT-Framework#gbd-achitecture).
+may execute on a remote host which need not be a GNU/Linux system. This is discussed at greater depth in [*GBD Architecture*](https://github.com/generic-beat-detector/GBD/wiki/The-GBD-IoT-Framework#gbd-architecture).
 
 <p align="center">
 <img src="https://github.com/generic-beat-detector/GBD/blob/master/docs/img/generalized-gbd-arch.jpg" alt="Generalized GBD Arch" width="430" height="250"/></p>
