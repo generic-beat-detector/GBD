@@ -65,7 +65,7 @@ int main(void)
 		static int bcnt, scnt, ccnt, __attribute__((unused)) blcnt;
 		static int prevcnt[GBD_BEAT_COUNT_BUF_SIZE];
 
-		usleep(10000); /* 100ms */
+		usleep(10000); /* 10ms or 100Hz */
 	
 		if (beat_cnt_map[KICKDRUM] != prevcnt[KICKDRUM]) {
 			prevcnt[KICKDRUM] = beat_cnt_map[KICKDRUM];
