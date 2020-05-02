@@ -20,11 +20,11 @@ This particular template has been tested on a Raspberry Pi 3B with a WS2812 stri
 		
       $ apt-get install scons
 
-* __Replace__ `rpi_ws281x/main.c` with `./main.c`, install `./gbd.h`, then build:
+* Copy `./main.c` and `./gbd.h` to `rpi_ws281x/` -- replacing the original `rpi_ws281x/main.c`. Then build:
 	
       $ scons
 
-This will build an executable file named `rpi_ws281x/test`. 
+This will result in an executable file named `rpi_ws281x/test`. 
 
 # Execute
 
