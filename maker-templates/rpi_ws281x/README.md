@@ -1,6 +1,6 @@
 ## Background
 
-This is a quick-and-dirty template program for demonstrating use of GBD with Jeremy Garff's [*rpi_ws281x*](https://github.com/jgarff/rpi_ws281x) project. It builds upon `../gbd-text-display.c` and assumes local `gbdserver` shared memory IPC. If everything goes well, then then the program will toggle 125 LEDs (of a WS2812) between colors Red, Blue, and Green upon `gbdserver` bass beat detection.
+This is a quick-and-dirty template program for demonstrating use of GBD with Jeremy Garff's [*rpi_ws281x*](https://github.com/jgarff/rpi_ws281x) project. It builds upon `../gbd-text-display.c` and assumes local `gbdserver` shared memory IPC. If everything goes well, then then the program will toggle 125 LEDs (of a WS2812B) between colors Red, Blue, and Green upon `gbdserver` bass beat detection.
 
 The main advantage of controlling an LED strip directly from the RPi running `gbdserver` -- as opposed to, say, over WiFi via ESP8266/ESP32 -- is that jitter is practically eliminated.
 
@@ -12,7 +12,7 @@ By default, the template program uses PWM0 and DMA channel 10. According to [*RP
 
 ### LED Strip Hookup
 
-This particular template has been tested on a Raspberry Pi 3B with a WS2812 strip. The data pin for the WS2812 was connected to the default RPi GPIO18.
+This particular template has been tested on a Raspberry Pi 3B with a WS2812B strip. The data pin for the WS2812B was connected to the default RPi GPIO18.
 
 ## Download and Build
 
