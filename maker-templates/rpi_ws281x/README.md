@@ -1,8 +1,8 @@
 ## Background
 
-This is a quick-and-dirty template program for demonstrating use of GBD with Jeremy Garff's [*rpi_ws281x*](https://github.com/jgarff/rpi_ws281x) project. It builds upon `../gbd-text-display.c`. If everything goes well, then then the program will toggle 125 LEDs (of a WS2812) between colors Red, Blue, and Green upon `gbdserver` bass beat detection.
+This is a quick-and-dirty template program for demonstrating use of GBD with Jeremy Garff's [*rpi_ws281x*](https://github.com/jgarff/rpi_ws281x) project. It builds upon `../gbd-text-display.c` and assumes local `gbdserver` shared memory IPC. If everything goes well, then then the program will toggle 125 LEDs (of a WS2812) between colors Red, Blue, and Green upon `gbdserver` bass beat detection.
 
-The main advantage of controlling a LED strip directly from the RPi -- as opposed to, say, over WiFi via ESP8266/ESP32 -- is that jitter is practically eliminated.
+The main advantage of controlling an LED strip directly from the RPi running `gbdserver` -- as opposed to, say, over WiFi via ESP8266/ESP32 -- is that jitter is practically eliminated.
 
 ## Setup
 
