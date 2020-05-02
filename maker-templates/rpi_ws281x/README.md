@@ -31,7 +31,7 @@ This will result in an executable file named `rpi_ws281x/test`.
 * __IMPORTANT NOTE:__ 
 
 	Since the `test` program has to be executed with `sudo` priviledges, it is important to note that if `/dev/shm/gbd` does not exist, then `test` will create it with `root:root` ownership. This will require `gbdserver` to either:
-	*	be executed with `sudo`, or 
+	* be executed with `sudo`, or 
 	* to have already created `/dev/shm/gbd`  
 	
 	... since `gbdserver` creates the SHM file with default ownership e.g. `pi:pi`
@@ -56,6 +56,6 @@ Simply execute `test` with:
 	BassBeat (3)
 	BassBeat (4)
 
-... the `BassBeat (N)`s will appear as `gbdserver` detects bass beats in the audio stream.
+... where the `BassBeat (N)`s will appear as `gbdserver` detects bass beats in the audio stream.
 
 
