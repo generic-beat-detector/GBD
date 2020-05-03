@@ -33,7 +33,9 @@ These template programs have been tested on a Raspberry Pi 3B with a WS2812B str
 
 This will result in an executable file named `rpi_ws281x/test`. 
 
-## Execute
+## Runtime
+
+### Execution
 
 Simply execute `rpi_ws281x/test` with:
 
@@ -65,5 +67,12 @@ Simply execute `rpi_ws281x/test` with:
 
 	then it is likely that `gbdserver` does not have sufficient priviledges to write to `/dev/shm/gbd`
 
+### System Metrics
 
+CPU and memory usage can be inspected via:
+
+    pi@raspberrypi:~ $ PIDLIST=$(for i in `pidof gbdserver` ; do echo -n "$i, "; done ; echo `pidof test`)
+    pi@raspberrypi:~ $ top -d .4 -p $PIDLIST
+
+On RPi 3B, CPU usage by `test` avaraged at around 6% while the signal analysis by `gbdserver` consumes about 5%. 
 
