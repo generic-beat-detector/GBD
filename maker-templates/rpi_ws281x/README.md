@@ -46,7 +46,7 @@ Simply execute `rpi_ws281x/test` with:
 	BassBeat (3)
 	BassBeat (4)
 
-... where the `BassBeat (N)`s will appear as `gbdserver` detects bass beats in the audio stream.
+... where the `BassBeat (N)`s will appear as `gbdserver` detects bass beats in the audio stream. Type `CTRL+C` to quit.
 
 You may also play around with arbitrary (but sensible) values of `-x|--width` and `-y|--height`, e.g.:
 
