@@ -361,7 +361,7 @@ int main(int argc, char *argv[])
 		static int tmp_cnt, bcnt;
 		static int prevcnt[GBD_BEAT_COUNT_BUF_SIZE];
 
-		usleep(10000);	/* 100ms */
+		usleep(1000000/30);	/* 30 FPS */
 
 		if (beat_cnt_map[KICKDRUM] != prevcnt[KICKDRUM]) {
 			prevcnt[KICKDRUM] = beat_cnt_map[KICKDRUM];
