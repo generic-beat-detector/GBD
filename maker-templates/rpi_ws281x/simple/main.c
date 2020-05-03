@@ -42,8 +42,6 @@ static char VERSION[] = "XX.YY.ZZ";
 #include <stdarg.h>
 #include <getopt.h>
 
-#include <errno.h>
-
 #include "clk.h"
 #include "gpio.h"
 #include "dma.h"
@@ -62,7 +60,7 @@ static char VERSION[] = "XX.YY.ZZ";
 #define STRIP_TYPE              WS2811_STRIP_GBR	// WS2812/SK6812RGB integrated chip+leds
 //#define STRIP_TYPE            SK6812_STRIP_RGBW               // SK6812RGBW (NOT SK6812RGB)
 
-#define WIDTH                   125
+#define WIDTH                   120
 #define HEIGHT                  1
 #define LED_COUNT               (WIDTH * HEIGHT)
 
@@ -70,7 +68,7 @@ int width = WIDTH;
 int height = HEIGHT;
 int led_count = LED_COUNT;
 
-int clear_on_exit = 0;
+int clear_on_exit = 1;
 
 ws2811_t ledstring = {
 	.freq = TARGET_FREQ,
@@ -92,8 +90,6 @@ ws2811_t ledstring = {
 		    },
 };
 
-ws2811_led_t *matrix;
-
 static uint8_t running = 1;
 
 void matrix_render(int color)
@@ -103,17 +99,6 @@ void matrix_render(int color)
 	for (x = 0; x < width; x++) {
 		for (y = 0; y < height; y++) {
 			ledstring.channel[0].leds[(y * width) + x] = color;
-		}
-	}
-}
-
-void matrix_clear(void)
-{
-	int x, y;
-
-	for (y = 0; y < (height); y++) {
-		for (x = 0; x < width; x++) {
-			matrix[y * width + x] = 0;
 		}
 	}
 }
@@ -298,6 +283,7 @@ void parseargs(int argc, char **argv, ws2811_t * ws2811)
 	}
 }
 
+#include <errno.h>
 #include "gbd.h"
 
 static void *shm_init(const char *filename)
@@ -339,8 +325,6 @@ int main(int argc, char *argv[])
 		VERSION_MICRO);
 
 	parseargs(argc, argv, &ledstring);
-
-	matrix = malloc(sizeof(ws2811_led_t) * width * height);
 
 	setup_handlers();
 
@@ -385,7 +369,6 @@ int main(int argc, char *argv[])
 	}
 
 	if (clear_on_exit) {
-		matrix_clear();
 		matrix_render(0);
 		ws2811_render(&ledstring);
 	}

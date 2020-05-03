@@ -42,8 +42,6 @@ static char VERSION[] = "XX.YY.ZZ";
 #include <stdarg.h>
 #include <getopt.h>
 
-#include <errno.h>
-
 #include "clk.h"
 #include "gpio.h"
 #include "dma.h"
@@ -70,7 +68,7 @@ int width = WIDTH;
 int height = HEIGHT;
 int led_count = LED_COUNT;
 
-int clear_on_exit = 0;
+int clear_on_exit = 1;
 
 ws2811_t ledstring = {
 	.freq = TARGET_FREQ,
@@ -92,33 +90,23 @@ ws2811_t ledstring = {
 		    },
 };
 
-ws2811_led_t *matrix;
-
 static uint8_t running = 1;
 
 void matrix_render(int height, uint32_t color)
 {
 	int x, y = height;
 
-	x = 0;
 	/* RHS border */
+	x = 0;
 	ledstring.channel[0].leds[(y * width) + x] = 0;
-	for (x = 1; x < width-1; x++) {
+
+	/* light-unit */
+	for (x = 1; x < width - 1; x++) {
 		ledstring.channel[0].leds[(y * width) + x] = color;
 	}
+
 	/* LHS border */
 	ledstring.channel[0].leds[(y * width) + x] = 0;
-}
-
-void matrix_clear(void)
-{
-	int x, y;
-
-	for (y = 0; y < (height); y++) {
-		for (x = 0; x < width; x++) {
-			matrix[y * width + x] = 0;
-		}
-	}
 }
 
 static void ctrl_c_handler(int signum)
@@ -232,6 +220,12 @@ void parseargs(int argc, char **argv, ws2811_t * ws2811)
 			if (optarg) {
 				height = atoi(optarg);
 				if (height > 0) {
+					if (height & 0x1) {
+						height++;
+						fprintf(stderr,
+							"WARNING: forcing \"--height %i\"\n",
+							height);
+					}
 					ws2811->channel[0].count =
 					    height * width;
 				} else {
@@ -301,6 +295,7 @@ void parseargs(int argc, char **argv, ws2811_t * ws2811)
 	}
 }
 
+#include <errno.h>
 #include "gbd.h"
 
 static void *shm_init(const char *filename)
@@ -343,8 +338,6 @@ int main(int argc, char *argv[])
 
 	parseargs(argc, argv, &ledstring);
 
-	matrix = malloc(sizeof(ws2811_led_t) * width * height);
-
 	setup_handlers();
 
 	if ((ret = ws2811_init(&ledstring)) != WS2811_SUCCESS) {
@@ -364,14 +357,13 @@ int main(int argc, char *argv[])
 		static int bcnt, tmp_cnt;
 		static uint32_t color = 0x00202000;
 		static int prevcnt[GBD_BEAT_COUNT_BUF_SIZE];
-		
-		usleep(1000000/30);	/* 30 FPS */
+
+		usleep(1000000 / 30);	/* 30 FPS */
 
 		if (beat_cnt_map[KICKDRUM] != prevcnt[KICKDRUM]) {
 			prevcnt[KICKDRUM] = beat_cnt_map[KICKDRUM];
 			printf("BassBeat (%i)\n", bcnt++);
 		}
-
 
 		if (beat_cnt_map[BASSLINE] != prevcnt[BASSLINE]) {
 			prevcnt[BASSLINE] = beat_cnt_map[BASSLINE];
@@ -385,16 +377,28 @@ int main(int argc, char *argv[])
 		}
 
 		{
+			static uint32_t last_color;
+
 			if (bcnt & 0x1) {
 				matrix_render(0, color);
 				matrix_render(1, 0);
-				matrix_render(2, 0);
-				matrix_render(3, color);
+				last_color = 0;
 			} else {
 				matrix_render(0, 0);
 				matrix_render(1, color);
-				matrix_render(2, color);
-				matrix_render(3, 0);
+				last_color = color;
+			}
+
+			for (int i = 2; i < height; i += 2) {
+				if (last_color) {
+					matrix_render(i, color);
+					matrix_render(i + 1, 0);
+					last_color = 0;
+				} else {
+					matrix_render(i, 0);
+					matrix_render(i + 1, color);
+					last_color = color;
+				}
 			}
 
 			if ((ret = ws2811_render(&ledstring)) != WS2811_SUCCESS) {
@@ -406,7 +410,8 @@ int main(int argc, char *argv[])
 	}
 
 	if (clear_on_exit) {
-		matrix_clear();
+		for (int i = 0; i < height; i++)
+			matrix_render(i, 0);
 		ws2811_render(&ledstring);
 	}
 
