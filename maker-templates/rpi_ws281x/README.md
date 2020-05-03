@@ -1,7 +1,7 @@
 ## Background
 
 These template programs demonstrate use of GBD with Jeremy Garff's [*rpi_ws281x*](https://github.com/jgarff/rpi_ws281x) project. They build upon `../gbd-text-display.c` and assume local `gbdserver` shared memory IPC. If everything goes well, then:
-* `simple` will toggle 125 LEDs (of a WS2812B) between RGB colors upon `gbdserver` kickdrum beat detection
+* `simple` will toggle 120 LEDs (of a WS2812B) between RGB colors upon `gbdserver` kickdrum beat detection
 * `segments` will mirror the [*GBD Youtube*](https://youtu.be/1wmrO51TZqA) OpenGL emulation -- but only for kickdrum beats and "bassline" sounds
 
 The main advantage of controlling an LED strip directly from the RPi running `gbdserver` -- as opposed to, say, over WiFi via ESP8266/ESP32 -- is that jitter is practically eliminated.
@@ -48,6 +48,12 @@ Simply execute `rpi_ws281x/test` with:
 
 ... where the `BassBeat (N)`s will appear as `gbdserver` detects bass beats in the audio stream.
 
+You may also play around with arbitrary (but sensible) values of `-x|--width` and `-y|--height`, e.g.:
+
+    $ sudo ./test -x 15 -y 8
+    $ sudo ./test --width 20 --height 6
+
+For the `segments` demo, the value of `--height` implies the number of segments (or "light units") while `--width` translates to the number of LEDs per segment. For `simple`, the product of `-x` and `-y` simply becomes the number of LEDs on the strip that will get lit up.
 
 * __IMPORTANT NOTE:__ 
 
